@@ -1804,10 +1804,12 @@
 
     .sent-blank-slot {
       display: inline-block;
-      min-width: 90px;
-      border-bottom: 3px solid var(--accent-rose);
+      min-width: 96px;
+      border-bottom: 3.5px solid var(--accent-rose);
       color: var(--accent-rose);
-      padding: 0 8px;
+      padding: 0 10px;
+      text-align: center;
+      vertical-align: baseline;
     }
     html[data-theme="dark"] .sent-blank-slot {
       color: #fda4af;
@@ -2793,13 +2795,13 @@
     let m;
     while ((m = re.exec(text)) !== null) {
       if (m.index > last) parts.push(escHtml(text.slice(last, m.index)));
-      parts.push('<span class="sent-blank-slot" id="blankSlot">_____</span>');
+      parts.push('<span class="sent-blank-slot" id="blankSlot" aria-label="ช่องว่างเติมคำ">&nbsp;</span>');
       last = m.index + m[0].length;
       replaced = true;
     }
     if (last < text.length) parts.push(escHtml(text.slice(last)));
     if (!replaced) {
-      return escHtml(text) + ' <span class="sent-blank-slot" id="blankSlot">_____</span>';
+      return escHtml(text) + ' <span class="sent-blank-slot" id="blankSlot" aria-label="ช่องว่างเติมคำ">&nbsp;</span>';
     }
     return parts.join('');
   }

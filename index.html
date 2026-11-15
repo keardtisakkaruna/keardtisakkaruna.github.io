@@ -3029,11 +3029,17 @@
     renderStage();
   }
 
+  function isGameMode() {
+    return curMode === 'sentgame' || curMode === 'listen' || curMode === 'quiz';
+  }
+
   function renderBottomDots() {
     const cat = CATEGORIES[curCatIdx];
+    const gameMode = isGameMode();
     wordDots.innerHTML = cat.items.map((it, idx) =>
-      '<button type="button" class="word-dot ' + (idx === curItemIdx ? 'active' : '') + '" onclick="jumpToItem(' + idx + ')">' +
-        (idx + 1) + '. ' + escHtml(it.word) +
+      '<button type="button" class="word-dot ' + (idx === curItemIdx ? 'active' : '') + '" onclick="jumpToItem(' + idx + ')"' +
+      (gameMode ? ' aria-label="ข้อที่ ' + (idx + 1) + '"' : '') + '>' +
+        (gameMode ? ('ข้อ ' + (idx + 1)) : ((idx + 1) + '. ' + escHtml(it.word))) +
       '</button>'
     ).join('');
     const activeDot = wordDots.querySelector('.word-dot.active');
@@ -3162,7 +3168,7 @@
           '</div>' +
           '<div class="game-main">' +
             '<div class="game-prompt-card">' +
-              '<img src="' + escAttr(item.img) + '" alt="' + escAttr(item.word) + '" width="512" height="512" decoding="async">' +
+              '<img src="' + escAttr(item.img) + '" alt="ภาพประกอบคำใบ้" width="512" height="512" decoding="async">' +
               '<div class="sent-blank-text">' + makeClozeSentence(item.sentenceEn, item.word) + '</div>' +
               '<div class="sent-blank-th">คำใบ้: ' + escHtml(item.sentenceTh) + '</div>' +
               '<button type="button" class="btn-speak" onclick="speakText(\'' + escAttr(item.sentenceEn) + '\', 0.8)">' + SVG.volume + ' ฟังประโยคใบ้</button>' +
